@@ -29,6 +29,14 @@ public class Test {
         Angriff.add(12);
         Angriff.add(13);
 
+        // Rollen der Helden anlegen
+        ArrayList<String> Rollen = new ArrayList<>();
+
+        Rollen.add("Krieger");
+        Rollen.add("Magier");
+        Rollen.add("Bogenschütze");
+        Rollen.add("Krieger");
+
         Scanner scanner = new Scanner(System.in);
 
         // Zufall erstellen
@@ -56,13 +64,8 @@ public class Test {
             }
 
             // Helden anzeigen
-            if (auswahl == 1) {
-                System.out.println();
-                System.out.println("=== Verfügbare Helden ===");
-                System.out.println("1 - Bjorn | Lebenspunkte: 120 | Angriff: 10");
-                System.out.println("2 - Mira  | Lebenspunkte: 80  | Angriff: 14");
-                System.out.println("3 - Kael  | Lebenspunkte: 100 | Angriff: 12");
-                System.out.println("4 - Luna  | Lebenspunkte: 90  | Angriff: 13");
+            for (int i = 0; i < Carakter.size(); i++) {
+                System.out.println((i + 1) + " - " + Carakter.get(i) + " | Rolle: " + Rollen.get(i) + " | Lebenspunkte: " + Lebenspunkte.get(i) + " | Angriff: " + Angriff.get(i));
             }
 
             // Kampf starten
