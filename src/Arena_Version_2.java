@@ -63,7 +63,7 @@ public class Arena_Version_2 {
         // Menü starten
         do {
             System.out.println();
-            System.out.println("=== Arena Version 1 ===");
+            System.out.println("=== Arena Version 2 ===");
             System.out.println("1 - Helden anzeigen");
             System.out.println("2 - Kampf starten");
             System.out.println("3 - Turnier starten");
@@ -125,7 +125,7 @@ public class Arena_Version_2 {
                 int angriff = Angriff.get(Helden - 1);
 
                 // Ersten Helden anzeigen
-                System.out.println("Zweiter Held:");
+                System.out.println("Erster Held:");
                 System.out.println("Name: " + str);
                 System.out.println("Rolle: " + rol);
                 System.out.println("Lebenspunkte: " + punkte);
