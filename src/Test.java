@@ -45,6 +45,14 @@ public class Test {
         Rollen.add("Bogenschütze");
         Rollen.add("Krieger");
 
+        // Anzahl der Angriffe zählen
+        ArrayList<Integer> angriffe = new ArrayList<>();
+
+        angriffe.add(0); // Bjorn
+        angriffe.add(0); // Mira
+        angriffe.add(0); // Kael
+        angriffe.add(0); // Luna
+
         Scanner scanner = new Scanner(System.in);
 
         // Zufall erstellen
