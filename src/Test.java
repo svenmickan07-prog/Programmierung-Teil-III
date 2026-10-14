@@ -29,6 +29,14 @@ public class Test {
         Angriff.add(12);
         Angriff.add(13);
 
+        // Rüstung der Helden anlegen
+        ArrayList<Integer> Ruestung = new ArrayList<>();
+
+        Ruestung.add(3); // Bjorn
+        Ruestung.add(0); // Mira
+        Ruestung.add(0); // Kael
+        Ruestung.add(3); // Luna
+
         // Rollen der Helden anlegen
         ArrayList<String> Rollen = new ArrayList<>();
 
@@ -64,8 +72,10 @@ public class Test {
             }
 
             // Helden anzeigen
-            for (int i = 0; i < Carakter.size(); i++) {
-                System.out.println((i + 1) + " - " + Carakter.get(i) + " | Rolle: " + Rollen.get(i) + " | Lebenspunkte: " + Lebenspunkte.get(i) + " | Angriff: " + Angriff.get(i));
+            if (auswahl == 1) {
+                for (int i = 0; i < Carakter.size(); i++) {
+                    System.out.println((i + 1) + " - " + Carakter.get(i) + " | Rolle: " + Rollen.get(i) + " | Lebenspunkte: " + Lebenspunkte.get(i) + " | Angriff: " + Angriff.get(i) + " | Rüstung: " + Ruestung.get(i));
+                }
             }
 
             // Kampf starten
@@ -101,13 +111,17 @@ public class Test {
                 } while (Helden < 1 || Helden > 4);
 
                 String str = Carakter.get(Helden - 1);
+                String rol = Rollen.get(Helden - 1);
                 int punkte = Lebenspunkte.get(Helden - 1);
+                int ruestung = Ruestung.get(Helden -1);
                 int angriff = Angriff.get(Helden - 1);
 
                 // Ersten Helden anzeigen
-                System.out.println("Erster Held:");
+                System.out.println("Zweiter Held:");
                 System.out.println("Name: " + str);
+                System.out.println("Rolle: " + rol);
                 System.out.println("Lebenspunkte: " + punkte);
+                System.out.println("Rüstung: " + ruestung);
                 System.out.println("Angriff: " + angriff);
 
                 // Zweiten Helden auswählen
@@ -138,13 +152,18 @@ public class Test {
                 } while (Helden2 == Helden || Helden2 < 1 || Helden2 > 4);
 
                 String str2 = Carakter.get(Helden2 - 1);
+                String rol2 = Rollen.get(Helden2 - 1);
                 int punkte2 = Lebenspunkte.get(Helden2 - 1);
+                int ruestung2 = Ruestung.get(Helden2 -1);
                 int angriff2 = Angriff.get(Helden2 - 1);
+
 
                 // Zweiten Helden anzeigen
                 System.out.println("Zweiter Held:");
                 System.out.println("Name: " + str2);
+                System.out.println("Rolle: " + rol2);
                 System.out.println("Lebenspunkte: " + punkte2);
+                System.out.println("Rüstung: " + ruestung2);
                 System.out.println("Angriff: " + angriff2);
 
                 // Auf Enter warten
@@ -161,9 +180,19 @@ public class Test {
                     // Angriff Held 1
                     int schaden = angriff + random.nextInt(5);
 
-                    punkte2 = punkte2 - schaden;
+                    // Rüstung wird vom Schaden abgezogen
+                    int echterSchaden = schaden - ruestung2;
 
-                    System.out.println(str + " hat " + str2 + " " + schaden + " hat zugefügt. " + str2 + " hat noch " + punkte2 + "Lebenspunkte.");
+                    // Schaden darf nicht negativ werden
+                    if (echterSchaden < 0) {
+                        echterSchaden = 0;
+                    }
+
+                    // Lebenspunkte abziehen
+                    punkte2 = punkte2 - echterSchaden;
+
+
+                    System.out.println(str + " hat " + str2 + " " + schaden + " hat zugefügt. " + str2 + " hat noch " + punkte2 + " Lebenspunkte.");
 
                     if (punkte2 <= 0) {
                         System.out.println("=== Kampf beendet ===");
@@ -174,11 +203,19 @@ public class Test {
                     // Angriff Held 2
                     schaden = angriff2 + random.nextInt(5);
 
-                    punkte = punkte - schaden;
+                    // Rüstung wird vom Schaden abgezogen
+                    echterSchaden = schaden - ruestung;
 
-                    System.out.println(str2 + " hat " + str + " " + schaden + " hat zugefügt. " + str + " hat noch " + punkte + "Lebenspunkte.");
+                    if (echterSchaden < 0) {
+                        echterSchaden = 0;
+                    }
 
-                    if (punkte2 <= 0) {
+                    // Lebenspunkte abziehen
+                    punkte = punkte - echterSchaden;
+
+                    System.out.println(str2 + " hat " + str + " " + schaden + " hat zugefügt. " + str + " hat noch " + punkte + " Lebenspunkte.");
+
+                    if (punkte <= 0) {
                         System.out.println("=== Kampf beendet ===");
                         System.out.println("Gewinner: " + str2);
                         break;
@@ -204,9 +241,10 @@ public class Test {
             }
 
             // Ungültiger Menüpunkt
-            else {
+            if (auswahl >= 4) {
                 System.out.println("Ungültige Auswahl. Wähle 0, 1, 2 oder 3.");
             }
+
 
         } while (auswahl != 0);
     }

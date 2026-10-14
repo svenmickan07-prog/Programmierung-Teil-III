@@ -175,7 +175,7 @@ public class Arena_Version_1 {
 
                     System.out.println(str2 + " hat " + str + " " + schaden + " hat zugefügt. " + str + " hat noch " + punkte + "Lebenspunkte.");
 
-                    if (punkte2 <= 0) {
+                    if (punkte <= 0) {
                         System.out.println("=== Kampf beendet ===");
                         System.out.println("Gewinner: " + str2);
                         break;
@@ -201,7 +201,8 @@ public class Arena_Version_1 {
             }
 
             // Ungültiger Menüpunkt
-            else {System.out.println("Ungültige Auswahl. Wähle 0, 1, 2 oder 3.");
+            if (auswahl >= 4) {
+                System.out.println("Ungültige Auswahl. Wähle 0, 1, 2 oder 3.");
             }
 
         } while (auswahl != 0);
