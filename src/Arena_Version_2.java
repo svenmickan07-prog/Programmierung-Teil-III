@@ -281,7 +281,15 @@ public class Arena_Version_2 {
             // Turnier starten
             if (auswahl == 3) {
                 System.out.println();
-                System.out.println("Geht noch nicht geh woanders spielen");
+                System.out.println("=== Turnier startet ===");
+
+                int siegerKampf1;
+                int siegerKampf2;
+                int gesamtSieger;
+
+                System.out.println("Kampf 1: " + Carakter.get(0) + " gegen " + Carakter.get(1));
+
+                System.out.println("Kampf 2: " + Carakter.get(2) + " gegen " + Carakter.get(3));
             }
 
             // Programm beenden
