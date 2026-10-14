@@ -185,8 +185,27 @@ public class Test {
 
                 while (punkte > 0 && punkte2 > 0) {
 
+                    // Angriff von Held 1 zählen
+                    angriffe.set(Helden - 1, angriffe.get(Helden - 1) + 1);
+
                     // Angriff Held 1
                     int schaden = angriff + random.nextInt(5);
+
+                    // Besonderheit Magier: Jeder 4. Angriff macht doppelten Schaden
+                    if (Rollen.get(Helden - 1).equals("Magier")
+                            && angriffe.get(Helden - 1) % 4 == 0) {
+
+                        schaden = schaden * 2;
+                        System.out.println("Magier-Bonus! Doppelter Schaden.");
+                    }
+
+                    // Besonderheit Bogenschütze: Jeder 3. Angriff macht 3 Schaden mehr
+                    if (Rollen.get(Helden - 1).equals("Bogenschütze")
+                            && angriffe.get(Helden - 1) % 3 == 0) {
+
+                        schaden = schaden + 3;
+                        System.out.println("Bogenschütze-Bonus! Plus 3 Schaden.");
+                    }
 
                     // Rüstung wird vom Schaden abgezogen
                     int echterSchaden = schaden - ruestung2;
@@ -208,8 +227,27 @@ public class Test {
                         break;
                     }
 
+                    // Angriff von Held 2 zählen
+                    angriffe.set(Helden2 - 1, angriffe.get(Helden2 - 1) + 1);
+
                     // Angriff Held 2
                     schaden = angriff2 + random.nextInt(5);
+
+                    // Besonderheit Magier: Jeder 4. Angriff macht doppelten Schaden
+                    if (Rollen.get(Helden2 - 1).equals("Magier")
+                            && angriffe.get(Helden2 - 1) % 4 == 0) {
+
+                        schaden = schaden * 2;
+                        System.out.println("Magier-Bonus! Doppelter Schaden.");
+                    }
+
+                    // Besonderheit Bogenschütze: Jeder 3. Angriff macht 3 Schaden mehr
+                    if (Rollen.get(Helden2 - 1).equals("Bogenschütze")
+                            && angriffe.get(Helden2 - 1) % 3 == 0) {
+
+                        schaden = schaden + 3;
+                        System.out.println("Bogenschütze-Bonus! Plus 3 Schaden.");
+                    }
 
                     // Rüstung wird vom Schaden abgezogen
                     echterSchaden = schaden - ruestung;
