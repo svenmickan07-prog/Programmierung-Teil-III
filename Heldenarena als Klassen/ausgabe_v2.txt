@@ -1,0 +1,56 @@
+=== Arena Version 2 ===
+1 - Helden anzeigen
+2 - Kampf starten
+3 - Turnier starten
+0 - Programm beenden
+Wähle einen Menüpunkt: 2
+
+=== Verfügbare Helden ===
+1 - Bjorn
+2 - Mira
+3 - Kael
+4 - Luna
+Wähle den ersten Helden: 1
+Erster Held:
+Name: Bjorn
+Rolle: Krieger
+Lebenspunkte: 120
+Rüstung: 3
+Angriff: 10
+Wähle den zweiten Helden: 2
+Zweiter Held:
+Name: Mira
+Rolle: Magier
+Lebenspunkte: 80
+Rüstung: 0
+Angriff: 14
+Drücke Enter, um den Kampf zu starten...
+
+=== Kampf beginnt ===
+Bjorn kämpft gegen Mira
+Bjorn hat Mira 10 hat zugefügt. Mira hat noch 70 Lebenspunkte.
+Mira hat Bjorn 17 hat zugefügt. Bjorn hat noch 106 Lebenspunkte.
+Bjorn hat Mira 13 hat zugefügt. Mira hat noch 57 Lebenspunkte.
+Mira hat Bjorn 18 hat zugefügt. Bjorn hat noch 91 Lebenspunkte.
+Bjorn hat Mira 10 hat zugefügt. Mira hat noch 47 Lebenspunkte.
+Mira hat Bjorn 14 hat zugefügt. Bjorn hat noch 80 Lebenspunkte.
+Bjorn hat Mira 10 hat zugefügt. Mira hat noch 37 Lebenspunkte.
+Magier-Bonus! Doppelter Schaden.
+Mira hat Bjorn 34 hat zugefügt. Bjorn hat noch 49 Lebenspunkte.
+Bjorn hat Mira 14 hat zugefügt. Mira hat noch 23 Lebenspunkte.
+Mira hat Bjorn 17 hat zugefügt. Bjorn hat noch 35 Lebenspunkte.
+Bjorn hat Mira 12 hat zugefügt. Mira hat noch 11 Lebenspunkte.
+Mira hat Bjorn 16 hat zugefügt. Bjorn hat noch 22 Lebenspunkte.
+Bjorn hat Mira 11 hat zugefügt. Mira hat noch 0 Lebenspunkte.
+=== Kampf beendet ===
+Gewinner: Bjorn
+Die Lebenspunkte wurden wieder aufgefüllt.
+
+=== Arena Version 2 ===
+1 - Helden anzeigen
+2 - Kampf starten
+3 - Turnier starten
+0 - Programm beenden
+Wähle einen Menüpunkt: 0
+
+Das Programm wurde beendet.
