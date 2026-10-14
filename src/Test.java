@@ -179,6 +179,10 @@ public class Test {
                 scanner.nextLine();
                 scanner.nextLine();
 
+                // Angriffszähler zurücksetzen
+                angriffe.set(Helden - 1, 0);
+                angriffe.set(Helden2 - 1, 0);
+
                 // Kampf starten
                 System.out.println("=== Kampf beginnt ===");
                 System.out.println(str + " kämpft gegen " + str2);

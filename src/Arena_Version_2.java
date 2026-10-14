@@ -179,6 +179,10 @@ public class Arena_Version_2 {
                 scanner.nextLine();
                 scanner.nextLine();
 
+                // Angriffszähler zurücksetzen
+                angriffe.set(Helden - 1, 0);
+                angriffe.set(Helden2 - 1, 0);
+
                 // Kampf starten
                 System.out.println("=== Kampf beginnt ===");
                 System.out.println(str + " kämpft gegen " + str2);
@@ -203,7 +207,7 @@ public class Arena_Version_2 {
                     if (Rollen.get(Helden - 1).equals("Bogenschütze")
                             && angriffe.get(Helden - 1) % 3 == 0) {
 
-                        schaden = schaden + 3;
+                        schaden = schaden + 8;
                         System.out.println("Bogenschütze-Bonus! Plus 3 Schaden.");
                     }
 
@@ -245,7 +249,7 @@ public class Arena_Version_2 {
                     if (Rollen.get(Helden2 - 1).equals("Bogenschütze")
                             && angriffe.get(Helden2 - 1) % 3 == 0) {
 
-                        schaden = schaden + 3;
+                        schaden = schaden + 8;
                         System.out.println("Bogenschütze-Bonus! Plus 3 Schaden.");
                     }
 
