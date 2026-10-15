@@ -8,26 +8,10 @@ public class Arena_Version_3 {
         // Helden als Objekte anlegen
         ArrayList<Held> helden = new ArrayList<>();
 
-        helden.add(new Held("Bjorn", 120, 10, 3));
-        helden.add(new Held("Mira", 80, 14, 0));
-        helden.add(new Held("Kael", 100, 12, 0));
-        helden.add(new Held("Luna", 90, 13, 3));
-
-        // Rollen der Helden anlegen
-        ArrayList<String> Rollen = new ArrayList<>();
-
-        Rollen.add("Krieger");
-        Rollen.add("Magier");
-        Rollen.add("Bogenschütze");
-        Rollen.add("Krieger");
-
-        // Anzahl der Angriffe zählen
-        ArrayList<Integer> angriffe = new ArrayList<>();
-
-        angriffe.add(0); // Bjorn
-        angriffe.add(0); // Mira
-        angriffe.add(0); // Kael
-        angriffe.add(0); // Luna
+        helden.add(new Held("Bjorn", 120, 10, 3, "Krieger"));
+        helden.add(new Held("Mira", 80, 14, 0, "Magier"));
+        helden.add(new Held("Kael", 100, 12, 0, "Bogenschütze"));
+        helden.add(new Held("Luna", 90, 13, 3, "Krieger"));
 
         Scanner scanner = new Scanner(System.in);
 
@@ -96,15 +80,15 @@ public class Arena_Version_3 {
                 } while (Helden < 1 || Helden > 4);
 
                 Held held1 = helden.get(Helden - 1);
-/*
+
                 // Ersten Helden anzeigen
                 System.out.println("Erster Held:");
-                System.out.println("Name: " + str);
-                System.out.println("Rolle: " + rol);
-                System.out.println("Lebenspunkte: " + punkte);
-                System.out.println("Rüstung: " + ruestung);
-                System.out.println("Angriff: " + angriff);
-*/
+                System.out.println("Name: " + held1.name);
+                System.out.println("Rolle: " + held1.rolle);
+                System.out.println("Lebenspunkte: " + held1.hp);
+                System.out.println("Rüstung: " + held1.ruestung);
+                System.out.println("Angriff: " + held1.angriff);
+
                 // Zweiten Helden auswählen
                 int Helden2;
 
@@ -134,23 +118,18 @@ public class Arena_Version_3 {
 
                 Held held2 = helden.get(Helden2 - 1);
 
-/*
                 // Zweiten Helden anzeigen
                 System.out.println("Zweiter Held:");
-                System.out.println("Name: " + str2);
-                System.out.println("Rolle: " + rol2);
-                System.out.println("Lebenspunkte: " + punkte2);
-                System.out.println("Rüstung: " + ruestung2);
-                System.out.println("Angriff: " + angriff2);
-*/
+                System.out.println("Name: " + held2.name);
+                System.out.println("Rolle: " + held2.rolle);
+                System.out.println("Lebenspunkte: " + held2.hp);
+                System.out.println("Rüstung: " + held2.ruestung);
+                System.out.println("Angriff: " + held2.angriff);
+
                 // Auf Enter warten
                 System.out.println("Drücke Enter, um den Kampf zu starten...");
                 scanner.nextLine();
                 scanner.nextLine();
-
-                // Angriffszähler zurücksetzen
-                angriffe.set(Helden - 1, 0);
-                angriffe.set(Helden2 - 1, 0);
 
                 // Kampf starten
                 System.out.println("=== Kampf beginnt ===");
@@ -185,9 +164,13 @@ public class Arena_Version_3 {
 
                 System.out.println("Die Lebenspunkte wurden wieder aufgefüllt.");
             }
-/*
+
             // Turnier starten
             if (auswahl == 3) {
+                System.out.println();
+                System.out.println("Geht noch nicht! geh woanders spielen.");
+            }
+ /*
                 System.out.println();
                 System.out.println("=== Turnier startet ===");
 

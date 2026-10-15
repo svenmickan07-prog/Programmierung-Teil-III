@@ -8,14 +8,18 @@ public class Held {
     int startHp;
     int angriff;
     int ruestung;
+    String rolle;
+    int angriffe;
 
     // Konstruktor
-    public Held(String name, int hp, int angriff, int ruestung) {
+    public Held(String name, int hp, int angriff, int ruestung, String rolle) {
         this.name = name;
         this.hp = hp;
         this.startHp = hp;
         this.angriff = angriff;
         this.ruestung = ruestung;
+        this.rolle = rolle;
+        this.angriffe = 0;
     }
 
     // Held anzeigen
@@ -28,6 +32,21 @@ public class Held {
 
         // Schaden berechnen
         int schaden = angriff + random.nextInt(5);
+
+        // Angriff zählen
+        angriffe++;
+
+        // Magier: Jeder 4. Angriff macht doppelten Schaden
+        if (rolle.equals("Magier") && angriffe % 4 == 0) {
+            schaden = schaden * 2;
+            System.out.println("Magier-Bonus! Doppelter Schaden.");
+        }
+
+        // Bogenschütze: Jeder 3. Angriff bekommt 8 Schaden dazu
+        if (rolle.equals("Bogenschütze") && angriffe % 3 == 0) {
+            schaden = schaden + 8;
+            System.out.println("Bogenschütze-Bonus! Plus 3 Schaden.");
+        }
 
         // Rüstung des Gegners abziehen
         int echterSchaden = schaden - ziel.ruestung;
@@ -47,6 +66,7 @@ public class Held {
     // Lebenspunkte zurücksetzen
     public void zuruecksetzen() {
         hp = startHp;
+        angriffe = 0;
     }
 
 
