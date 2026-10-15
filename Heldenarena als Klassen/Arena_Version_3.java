@@ -62,7 +62,7 @@ public class Arena_Version_3 {
                     hel.anzeigen();
                 }
             }
-/*
+
             // Kampf starten
             if (auswahl == 2) {
 
@@ -95,12 +95,8 @@ public class Arena_Version_3 {
 
                 } while (Helden < 1 || Helden > 4);
 
-                String str = Carakter.get(Helden - 1);
-                String rol = Rollen.get(Helden - 1);
-                int punkte = Lebenspunkte.get(Helden - 1);
-                int ruestung = Ruestung.get(Helden - 1);
-                int angriff = Angriff.get(Helden - 1);
-
+                Held held1 = helden.get(Helden - 1);
+/*
                 // Ersten Helden anzeigen
                 System.out.println("Erster Held:");
                 System.out.println("Name: " + str);
@@ -108,7 +104,7 @@ public class Arena_Version_3 {
                 System.out.println("Lebenspunkte: " + punkte);
                 System.out.println("Rüstung: " + ruestung);
                 System.out.println("Angriff: " + angriff);
-
+*/
                 // Zweiten Helden auswählen
                 int Helden2;
 
@@ -136,13 +132,9 @@ public class Arena_Version_3 {
 
                 } while (Helden2 == Helden || Helden2 < 1 || Helden2 > 4);
 
-                String str2 = Carakter.get(Helden2 - 1);
-                String rol2 = Rollen.get(Helden2 - 1);
-                int punkte2 = Lebenspunkte.get(Helden2 - 1);
-                int ruestung2 = Ruestung.get(Helden2 - 1);
-                int angriff2 = Angriff.get(Helden2 - 1);
+                Held held2 = helden.get(Helden2 - 1);
 
-
+/*
                 // Zweiten Helden anzeigen
                 System.out.println("Zweiter Held:");
                 System.out.println("Name: " + str2);
@@ -150,7 +142,7 @@ public class Arena_Version_3 {
                 System.out.println("Lebenspunkte: " + punkte2);
                 System.out.println("Rüstung: " + ruestung2);
                 System.out.println("Angriff: " + angriff2);
-
+*/
                 // Auf Enter warten
                 System.out.println("Drücke Enter, um den Kampf zu starten...");
                 scanner.nextLine();
@@ -162,98 +154,38 @@ public class Arena_Version_3 {
 
                 // Kampf starten
                 System.out.println("=== Kampf beginnt ===");
-                System.out.println(str + " kämpft gegen " + str2);
+                System.out.println(held1.name + " kämpft gegen " + held2.name);
 
-                while (punkte > 0 && punkte2 > 0) {
+                while (held1.hp > 0 && held2.hp > 0) {
 
-                    // Angriff von Held 1 zählen
-                    angriffe.set(Helden - 1, angriffe.get(Helden - 1) + 1);
+                    // Held 1 greift an
+                    held1.greiftAn(held2, random);
 
-                    // Angriff Held 1
-                    int schaden = angriff + random.nextInt(5);
-
-                    // Besonderheit Magier: Jeder 4. Angriff macht doppelten Schaden
-                    if (Rollen.get(Helden - 1).equals("Magier")
-                            && angriffe.get(Helden - 1) % 4 == 0) {
-
-                        schaden = schaden * 2;
-                        System.out.println("Magier-Bonus! Doppelter Schaden.");
-                    }
-
-                    // Besonderheit Bogenschütze: Jeder 3. Angriff macht 3 Schaden mehr
-                    if (Rollen.get(Helden - 1).equals("Bogenschütze")
-                            && angriffe.get(Helden - 1) % 3 == 0) {
-
-                        schaden = schaden + 8;
-                        System.out.println("Bogenschütze-Bonus! Plus 3 Schaden.");
-                    }
-
-                    // Rüstung wird vom Schaden abgezogen
-                    int echterSchaden = schaden - ruestung2;
-
-                    // Schaden darf nicht negativ werden
-                    if (echterSchaden < 0) {
-                        echterSchaden = 0;
-                    }
-
-                    // Lebenspunkte abziehen
-                    punkte2 = punkte2 - echterSchaden;
-
-
-                    System.out.println(str + " hat " + str2 + " " + schaden + " hat zugefügt. " + str2 + " hat noch " + punkte2 + " Lebenspunkte.");
-
-                    if (punkte2 <= 0) {
+                    // Prüfen, ob Held 2 besiegt ist
+                    if (held2.hp <= 0) {
                         System.out.println("=== Kampf beendet ===");
-                        System.out.println("Gewinner: " + str);
+                        System.out.println("Gewinner: " + held1.name);
                         break;
                     }
 
-                    // Angriff von Held 2 zählen
-                    angriffe.set(Helden2 - 1, angriffe.get(Helden2 - 1) + 1);
+                    // Held 2 greift an
+                    held2.greiftAn(held1, random);
 
-                    // Angriff Held 2
-                    schaden = angriff2 + random.nextInt(5);
-
-                    // Besonderheit Magier: Jeder 4. Angriff macht doppelten Schaden
-                    if (Rollen.get(Helden2 - 1).equals("Magier")
-                            && angriffe.get(Helden2 - 1) % 4 == 0) {
-
-                        schaden = schaden * 2;
-                        System.out.println("Magier-Bonus! Doppelter Schaden.");
-                    }
-
-                    // Besonderheit Bogenschütze: Jeder 3. Angriff macht 3 Schaden mehr
-                    if (Rollen.get(Helden2 - 1).equals("Bogenschütze")
-                            && angriffe.get(Helden2 - 1) % 3 == 0) {
-
-                        schaden = schaden + 8;
-                        System.out.println("Bogenschütze-Bonus! Plus 3 Schaden.");
-                    }
-
-                    // Rüstung wird vom Schaden abgezogen
-                    echterSchaden = schaden - ruestung;
-
-                    if (echterSchaden < 0) {
-                        echterSchaden = 0;
-                    }
-
-                    // Lebenspunkte abziehen
-                    punkte = punkte - echterSchaden;
-
-                    System.out.println(str2 + " hat " + str + " " + schaden + " hat zugefügt. " + str + " hat noch " + punkte + " Lebenspunkte.");
-
-                    if (punkte <= 0) {
+                    // Prüfen, ob Held 1 besiegt ist
+                    if (held1.hp <= 0) {
                         System.out.println("=== Kampf beendet ===");
-                        System.out.println("Gewinner: " + str2);
+                        System.out.println("Gewinner: " + held2.name);
                         break;
                     }
                 }
 
-                // Lebenspunkte werden beim nächsten Kampf
-                // wieder neu aus der Liste geladen
+                // Lebenspunkte für den nächsten Kampf zurücksetzen
+                held1.zuruecksetzen();
+                held2.zuruecksetzen();
+
                 System.out.println("Die Lebenspunkte wurden wieder aufgefüllt.");
             }
-
+/*
             // Turnier starten
             if (auswahl == 3) {
                 System.out.println();
