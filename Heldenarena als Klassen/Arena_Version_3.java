@@ -5,37 +5,13 @@ import java.util.Random;
 public class Arena_Version_3 {
     public static void main(String[] args) {
 
-        // Helden anlegen
-        ArrayList<String> Carakter = new ArrayList<>();
+        // Helden als Objekte anlegen
+        ArrayList<Held> helden = new ArrayList<>();
 
-        Carakter.add("Bjorn");
-        Carakter.add("Mira");
-        Carakter.add("Kael");
-        Carakter.add("Luna");
-
-        // Lebenspunkte anlegen
-        ArrayList<Integer> Lebenspunkte = new ArrayList<>();
-
-        Lebenspunkte.add(120);
-        Lebenspunkte.add(80);
-        Lebenspunkte.add(100);
-        Lebenspunkte.add(90);
-
-        // Angriffswerte anlegen
-        ArrayList<Integer> Angriff = new ArrayList<>();
-
-        Angriff.add(10);
-        Angriff.add(14);
-        Angriff.add(12);
-        Angriff.add(13);
-
-        // Rüstung der Helden anlegen
-        ArrayList<Integer> Ruestung = new ArrayList<>();
-
-        Ruestung.add(3); // Bjorn
-        Ruestung.add(0); // Mira
-        Ruestung.add(0); // Kael
-        Ruestung.add(3); // Luna
+        helden.add(new Held("Bjorn", 120, 10, 3));
+        helden.add(new Held("Mira", 80, 14, 0));
+        helden.add(new Held("Kael", 100, 12, 0));
+        helden.add(new Held("Luna", 90, 13, 3));
 
         // Rollen der Helden anlegen
         ArrayList<String> Rollen = new ArrayList<>();
@@ -81,11 +57,12 @@ public class Arena_Version_3 {
 
             // Helden anzeigen
             if (auswahl == 1) {
-                for (int i = 0; i < Carakter.size(); i++) {
-                    System.out.println((i + 1) + " - " + Carakter.get(i) + " | Rolle: " + Rollen.get(i) + " | Lebenspunkte: " + Lebenspunkte.get(i) + " | Angriff: " + Angriff.get(i) + " | Rüstung: " + Ruestung.get(i));
+
+                for (Held hel : helden) {
+                    hel.anzeigen();
                 }
             }
-
+/*
             // Kampf starten
             if (auswahl == 2) {
 
@@ -274,8 +251,7 @@ public class Arena_Version_3 {
 
                 // Lebenspunkte werden beim nächsten Kampf
                 // wieder neu aus der Liste geladen
-                System.out.println(
-                        "Die Lebenspunkte wurden wieder aufgefüllt.");
+                System.out.println("Die Lebenspunkte wurden wieder aufgefüllt.");
             }
 
             // Turnier starten
@@ -291,7 +267,7 @@ public class Arena_Version_3 {
 
                 System.out.println("Kampf 2: " + Carakter.get(2) + " gegen " + Carakter.get(3));
             }
-
+*/
             // Programm beenden
             if (auswahl == 0) {
                 System.out.println();
