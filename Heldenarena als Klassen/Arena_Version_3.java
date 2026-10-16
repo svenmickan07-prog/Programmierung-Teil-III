@@ -167,22 +167,37 @@ public class Arena_Version_3 {
 
             // Turnier starten
             if (auswahl == 3) {
-                System.out.println();
-                System.out.println("Geht noch nicht! geh woanders spielen.");
-            }
- /*
+
                 System.out.println();
                 System.out.println("=== Turnier startet ===");
 
-                int siegerKampf1;
-                int siegerKampf2;
-                int gesamtSieger;
+                // Kampf 1: Bjorn gegen Mira
+                System.out.println();
+                System.out.println("=== Kampf 1 ===");
+                System.out.println(helden.get(0).name + " gegen " + helden.get(1).name);
 
-                System.out.println("Kampf 1: " + Carakter.get(0) + " gegen " + Carakter.get(1));
+                Held siegerKampf1 = kampf(helden.get(0), helden.get(1), random);
 
-                System.out.println("Kampf 2: " + Carakter.get(2) + " gegen " + Carakter.get(3));
+                // Kampf 2: Kael gegen Luna
+                System.out.println();
+                System.out.println("=== Kampf 2 ===");
+                System.out.println(helden.get(2).name + " gegen " + helden.get(3).name);
+
+                Held siegerKampf2 = kampf(helden.get(2), helden.get(3), random);
+
+                // Finale
+                System.out.println();
+                System.out.println("=== Finale ===");
+                System.out.println(siegerKampf1.name + " gegen " + siegerKampf2.name);
+
+                Held gesamtSieger = kampf(siegerKampf1, siegerKampf2, random);
+
+                // Turniersieger anzeigen
+                System.out.println();
+                System.out.println("=== Turnier beendet ===");
+                System.out.println("Gesamtsieger: " + gesamtSieger.name);
             }
-*/
+
             // Programm beenden
             if (auswahl == 0) {
                 System.out.println();
@@ -197,4 +212,42 @@ public class Arena_Version_3 {
 
         } while (auswahl != 0);
     }
+
+    // Zwei Helden kämpfen gegeneinander
+    public static Held kampf(Held held1, Held held2, Random random) {
+
+        // Kämpfen, solange beide noch Lebenspunkte haben
+        while (held1.hp > 0 && held2.hp > 0) {
+
+            // Held 1 greift Held 2 an
+            held1.greiftAn(held2, random);
+
+            // Prüfen, ob Held 2 besiegt wurde
+            if (held2.hp <= 0) {
+                System.out.println("Gewinner: " + held1.name);
+
+                held1.zuruecksetzen();
+                held2.zuruecksetzen();
+
+                return held1;
+            }
+
+            // Held 2 greift Held 1 an
+            held2.greiftAn(held1, random);
+
+            // Prüfen, ob Held 1 besiegt wurde
+            if (held1.hp <= 0) {
+                System.out.println("Gewinner: " + held2.name);
+
+                held1.zuruecksetzen();
+                held2.zuruecksetzen();
+
+                return held2;
+            }
+        }
+
+        return null;
+    }
+
+
 }

@@ -45,7 +45,7 @@ public class Held {
         // Bogenschütze: Jeder 3. Angriff bekommt 8 Schaden dazu
         if (rolle.equals("Bogenschütze") && angriffe % 3 == 0) {
             schaden = schaden + 8;
-            System.out.println("Bogenschütze-Bonus! Plus 3 Schaden.");
+            System.out.println("Bogenschütze-Bonus! Plus 8 Schaden.");
         }
 
         // Rüstung des Gegners abziehen
