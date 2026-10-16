@@ -17,33 +17,39 @@ Rolle: Krieger
 Lebenspunkte: 120
 Rüstung: 3
 Angriff: 10
-Wähle den zweiten Helden: 2
+Wähle den zweiten Helden: 4
 Zweiter Held:
-Name: Mira
-Rolle: Magier
-Lebenspunkte: 80
-Rüstung: 0
-Angriff: 14
+Name: Luna
+Rolle: Krieger
+Lebenspunkte: 90
+Rüstung: 3
+Angriff: 13
 Drücke Enter, um den Kampf zu starten...
 
 === Kampf beginnt ===
-Bjorn kämpft gegen Mira
-Bjorn hat Mira 10 hat zugefügt. Mira hat noch 70 Lebenspunkte.
-Mira hat Bjorn 17 hat zugefügt. Bjorn hat noch 106 Lebenspunkte.
-Bjorn hat Mira 13 hat zugefügt. Mira hat noch 57 Lebenspunkte.
-Mira hat Bjorn 18 hat zugefügt. Bjorn hat noch 91 Lebenspunkte.
-Bjorn hat Mira 10 hat zugefügt. Mira hat noch 47 Lebenspunkte.
-Mira hat Bjorn 14 hat zugefügt. Bjorn hat noch 80 Lebenspunkte.
-Bjorn hat Mira 10 hat zugefügt. Mira hat noch 37 Lebenspunkte.
-Magier-Bonus! Doppelter Schaden.
-Mira hat Bjorn 34 hat zugefügt. Bjorn hat noch 49 Lebenspunkte.
-Bjorn hat Mira 14 hat zugefügt. Mira hat noch 23 Lebenspunkte.
-Mira hat Bjorn 17 hat zugefügt. Bjorn hat noch 35 Lebenspunkte.
-Bjorn hat Mira 12 hat zugefügt. Mira hat noch 11 Lebenspunkte.
-Mira hat Bjorn 16 hat zugefügt. Bjorn hat noch 22 Lebenspunkte.
-Bjorn hat Mira 11 hat zugefügt. Mira hat noch 0 Lebenspunkte.
+Bjorn kämpft gegen Luna
+Bjorn hat Luna 10 hat zugefügt. Luna hat noch 83 Lebenspunkte.
+Luna hat Bjorn 16 hat zugefügt. Bjorn hat noch 107 Lebenspunkte.
+Bjorn hat Luna 13 hat zugefügt. Luna hat noch 73 Lebenspunkte.
+Luna hat Bjorn 17 hat zugefügt. Bjorn hat noch 93 Lebenspunkte.
+Bjorn hat Luna 10 hat zugefügt. Luna hat noch 66 Lebenspunkte.
+Luna hat Bjorn 13 hat zugefügt. Bjorn hat noch 83 Lebenspunkte.
+Bjorn hat Luna 10 hat zugefügt. Luna hat noch 59 Lebenspunkte.
+Luna hat Bjorn 16 hat zugefügt. Bjorn hat noch 70 Lebenspunkte.
+Bjorn hat Luna 14 hat zugefügt. Luna hat noch 48 Lebenspunkte.
+Luna hat Bjorn 16 hat zugefügt. Bjorn hat noch 57 Lebenspunkte.
+Bjorn hat Luna 12 hat zugefügt. Luna hat noch 39 Lebenspunkte.
+Luna hat Bjorn 15 hat zugefügt. Bjorn hat noch 45 Lebenspunkte.
+Bjorn hat Luna 11 hat zugefügt. Luna hat noch 31 Lebenspunkte.
+Luna hat Bjorn 15 hat zugefügt. Bjorn hat noch 33 Lebenspunkte.
+Bjorn hat Luna 11 hat zugefügt. Luna hat noch 23 Lebenspunkte.
+Luna hat Bjorn 15 hat zugefügt. Bjorn hat noch 21 Lebenspunkte.
+Bjorn hat Luna 11 hat zugefügt. Luna hat noch 15 Lebenspunkte.
+Luna hat Bjorn 13 hat zugefügt. Bjorn hat noch 11 Lebenspunkte.
+Bjorn hat Luna 13 hat zugefügt. Luna hat noch 5 Lebenspunkte.
+Luna hat Bjorn 17 hat zugefügt. Bjorn hat noch -3 Lebenspunkte.
 === Kampf beendet ===
-Gewinner: Bjorn
+Gewinner: Luna
 Die Lebenspunkte wurden wieder aufgefüllt.
 
 === Arena Version 2 ===
