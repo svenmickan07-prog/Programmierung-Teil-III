@@ -162,6 +162,7 @@ public class Arena_Version_3 {
             if (auswahl < 0 || auswahl > 3) {
                 System.out.println("Ungültige Auswahl. " + "Wähle 0, 1, 2 oder 3.");
             }
+            
 
         } while (auswahl != 0);
         scanner.close();
