@@ -3,13 +3,13 @@ import java.util.Random;
 public class Held {
 
     // Werte des Helden
-    String name;
-    int hp;
-    int startHp;
-    int angriff;
-    int ruestung;
-    String rolle;
-    int angriffe;
+    private String name;
+    private int hp;
+    private int startHp;
+    private int angriff;
+    private int ruestung;
+    private String rolle;
+    private int angriffsZaehler;
 
     // Konstruktor
     public Held(String name, int hp, int angriff, int ruestung, String rolle) {
@@ -19,55 +19,84 @@ public class Held {
         this.angriff = angriff;
         this.ruestung = ruestung;
         this.rolle = rolle;
-        this.angriffe = 0;
+        this.angriffsZaehler = 0;
     }
 
-    // Held anzeigen
+    // Getter
+    public String getName() {
+        return name;
+    }
+
+    public String getRolle() {
+        return rolle;
+    }
+
+    public int getHp() {
+        return hp;
+    }
+
+    public int getAngriff() {
+        return angriff;
+    }
+
+    public int getRuestung() {
+        return ruestung;
+    }
+
+    // Schaden bekommen
+    public void nimmSchaden(int schaden) {
+        hp = hp - schaden;
+    }
+
+    // Prüfen, ob der Held besiegt wurde
+    public boolean istBesiegt() {
+        return hp <= 0;
+    }
+
+    // Informationen des Helden anzeigen
     public void anzeigen() {
-        System.out.println("Name: " + name + " | Lebenspunkte: " + hp + " | Angriff: " + angriff + " | Rüstung: " + ruestung);
+        System.out.println("Name: " + name + " | Rolle: " + rolle + " | Lebenspunkte: " + hp + " | Angriff: " + angriff + " | Rüstung: " + ruestung);
     }
 
-    // Held greift einen anderen Helden an
+    // Einen anderen Helden angreifen
     public void greiftAn(Held ziel, Random random) {
 
-        // Schaden berechnen
+        // Angriff zählen
+        angriffsZaehler++;
+
+        // Basisschaden
         int schaden = angriff + random.nextInt(5);
 
-        // Angriff zählen
-        angriffe++;
-
         // Magier: Jeder 4. Angriff macht doppelten Schaden
-        if (rolle.equals("Magier") && angriffe % 4 == 0) {
+        if (rolle.equals("Magier") && angriffsZaehler % 4 == 0) {
             schaden = schaden * 2;
             System.out.println("Magier-Bonus! Doppelter Schaden.");
         }
 
-        // Bogenschütze: Jeder 3. Angriff bekommt 8 Schaden dazu
-        if (rolle.equals("Bogenschütze") && angriffe % 3 == 0) {
+        // Bogenschütze: Jeder 3. Angriff macht 8 Schaden mehr
+        if (rolle.equals("Bogenschütze") && angriffsZaehler % 3 == 0) {
             schaden = schaden + 8;
             System.out.println("Bogenschütze-Bonus! Plus 8 Schaden.");
         }
 
-        // Rüstung des Gegners abziehen
-        int echterSchaden = schaden - ziel.ruestung;
+        // Rüstung des Gegners berücksichtigen
+        int echterSchaden = schaden - ziel.getRuestung();
 
-        // Schaden darf nicht negativ werden
+        // Schaden darf nicht negativ sein
         if (echterSchaden < 0) {
             echterSchaden = 0;
         }
 
-        // Lebenspunkte des Gegners reduzieren
-        ziel.hp = ziel.hp - echterSchaden;
+        // Gegner bekommt Schaden
+        ziel.nimmSchaden(echterSchaden);
 
-        // Angriff anzeigen
-        System.out.println(name + " hat " + ziel.name + " " + schaden + " Schaden zugefügt. " + ziel.name + " hat noch " + ziel.hp + " Lebenspunkte.");
+        // Angriff ausgeben
+        System.out.println(name + " hat " + ziel.getName() + " " + schaden + " Schaden zugefügt. " + ziel.getName() + " hat noch " + ziel.getHp() + " Lebenspunkte.");
     }
 
-    // Lebenspunkte zurücksetzen
+    // Held zurücksetzen
     public void zuruecksetzen() {
         hp = startHp;
-        angriffe = 0;
+        angriffsZaehler = 0;
     }
-
-
 }
