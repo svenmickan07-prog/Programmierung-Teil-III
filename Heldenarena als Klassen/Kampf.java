@@ -2,52 +2,48 @@ import java.util.Random;
 
 public class Kampf {
 
+    // Zwei Helden kämpfen gegeneinander
     public static Held starten(Held held1, Held held2, Random random) {
 
-        // Vor jedem Kampf zurücksetzen
+        // Beide Helden vor dem Kampf zurücksetzen
         held1.zuruecksetzen();
         held2.zuruecksetzen();
 
-        // Kämpfen, solange beide Helden leben
-        while (!held1.istBesiegt() && !held2.istBesiegt()) {
+        // Held 1 greift zuerst an
+        Held angreifer = held1;
+        Held verteidiger = held2;
 
-            // Held 1 greift an
-            held1.greiftAn(held2, random);
+        // Kämpfen, bis der Verteidiger besiegt wurde
+        while (!verteidiger.istBesiegt()) {
 
-            // Hat Held 1 gewonnen?
-            if (held2.istBesiegt()) {
+            // Aktueller Angreifer greift an
+            angreifer.greiftAn(verteidiger, random);
 
-                System.out.println("Gewinner: " + held1.getName());
-
-                // Gewinner merken
-                Held gewinner = held1;
-
-                // Beide für später zurücksetzen
-                held1.zuruecksetzen();
-                held2.zuruecksetzen();
-
-                return gewinner;
+            // Kampf beenden, wenn der Verteidiger besiegt wurde
+            if (verteidiger.istBesiegt()) {
+                break;
             }
 
-            // Held 2 greift an
-            held2.greiftAn(held1, random);
+            // Angreifer vor dem Tauschen zwischenspeichern
+            Held zwischenSpeicher = angreifer;
 
-            // Hat Held 2 gewonnen?
-            if (held1.istBesiegt()) {
+            // Der bisherige Verteidiger wird zum Angreifer
+            angreifer = verteidiger;
 
-                System.out.println("Gewinner: " + held2.getName());
-
-                // Gewinner merken
-                Held gewinner = held2;
-
-                // Beide für später zurücksetzen
-                held1.zuruecksetzen();
-                held2.zuruecksetzen();
-
-                return gewinner;
-            }
+            // Der bisherige Angreifer wird zum Verteidiger
+            verteidiger = zwischenSpeicher;
         }
 
-        return null;
+        // Der Angreifer hat den letzten Treffer ausgeführt
+        Held gewinner = angreifer;
+
+        System.out.println("Gewinner: " + gewinner.getName());
+
+        // Beide Helden nach dem Kampf zurücksetzen
+        held1.zuruecksetzen();
+        held2.zuruecksetzen();
+
+        // Gewinner an Einzelkampf oder Turnier zurückgeben
+        return gewinner;
     }
 }

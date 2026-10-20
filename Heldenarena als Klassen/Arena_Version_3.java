@@ -1,29 +1,32 @@
-import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Arena_Version_3 {
-
     public static void main(String[] args) {
 
-        // Helden als Objekte anlegen
+        // Liste für alle Helden erstellen
         ArrayList<Held> helden = new ArrayList<>();
 
+        // Bjorn als normalen Helden erstellen
         helden.add(new Held("Bjorn", 120, 10, 3, "Krieger"));
-        helden.add(new Held("Mira", 80, 14, 0, "Magier"));
+        // Mira als echtes Magier-Objekt erstellen
+        helden.add(new Magier("Mira", 80, 14, 0));
+        // Kael als normalen Helden mit Bogenschützen-Rolle erstellen
         helden.add(new Held("Kael", 100, 12, 0, "Bogenschütze"));
+        // Luna als normalen Helden erstellen
         helden.add(new Held("Luna", 90, 13, 3, "Krieger"));
 
-        // Scanner erstellen
+        // Scanner für Benutzereingaben erstellen
         Scanner scanner = new Scanner(System.in);
 
-        // Ein Random für das gesamte Programm
+        // Einen gemeinsamen Random mit Seed 42 erstellen
         Random random = new Random(42);
 
-        int auswahl;
+        int auswahl = -1;
 
-        // Menü starten
-        do {
+        // Menü läuft, solange nicht 0 eingegeben wurde
+        while (auswahl != 0) {
 
             System.out.println();
             System.out.println("=== Arena Version 3 ===");
@@ -33,18 +36,20 @@ public class Arena_Version_3 {
             System.out.println("0 - Programm beenden");
             System.out.print("Wähle einen Menüpunkt: ");
 
-            // Menüeingabe prüfen
+            // Prüfen, ob eine Zahl eingegeben wurde
             if (scanner.hasNextInt()) {
                 auswahl = scanner.nextInt();
+
             } else {
                 System.out.println("Bitte nur Zahlen eingeben.");
+
+                // Falsche Eingabe entfernen
                 scanner.next();
                 auswahl = -1;
             }
 
-            // Helden anzeigen
+            // Menüpunkt 1: Helden anzeigen
             if (auswahl == 1) {
-
                 System.out.println();
                 System.out.println("=== Verfügbare Helden ===");
 
@@ -53,118 +58,126 @@ public class Arena_Version_3 {
                 }
             }
 
-            // Einzelkampf starten
+            // Menüpunkt 2: Einzelkampf starten
             if (auswahl == 2) {
-
                 System.out.println();
-                System.out.println("=== Verfügbare Helden ===");
+                System.out.println("=== Verfügbare Helden ==="
+                );
 
-                for (int i = 0; i < helden.size(); i++) {
+                // Helden mit Nummer anzeigen
+                for (int i = 0;
+                     i < helden.size();
+                     i++) {
+
                     System.out.println((i + 1) + " - " + helden.get(i).getName());
                 }
 
+                // Ersten Helden auswählen
+                Held held1 = heldAuswaehlen(scanner, helden, null, "Wähle den ersten Helden: ");
 
-                // Held 1 auswählen
-                int heldNummer1 = 0;
-
-                while (heldNummer1 < 1 || heldNummer1 > helden.size()) {
-
-                    System.out.print("Wähle den ersten Helden: ");
-
-                    if (scanner.hasNextInt()) {
-
-                        heldNummer1 = scanner.nextInt();
-
-                        if (heldNummer1 < 1 || heldNummer1 > helden.size()) {
-                            System.out.println("Ungültige Nummer.");
-                        }
-
-                    } else {
-
-                        System.out.println("Bitte nur Zahlen eingeben.");
-                        scanner.next();
-                        heldNummer1 = 0;
-                    }
-                }
-
-                Held held1 = helden.get(heldNummer1 - 1);
+                // Zweiten Helden auswählen
+                Held held2 = heldAuswaehlen(scanner, helden, held1, "Wähle den zweiten Helden: ");
 
                 System.out.println();
                 System.out.println("Erster Held:");
 
                 held1.anzeigen();
 
-                // Held 2 auswählen
-                int heldNummer2 = 0;
-
-                while (heldNummer2 == heldNummer1 || heldNummer2 < 1 || heldNummer2 > helden.size()) {
-
-                    System.out.print("Wähle den zweiten Helden: ");
-
-                    if (scanner.hasNextInt()) {
-
-                        heldNummer2 = scanner.nextInt();
-
-                        if (heldNummer2 < 1 || heldNummer2 > helden.size()) {
-                            System.out.println("Ungültige Nummer.");
-                        }
-
-                        if (heldNummer2 == heldNummer1) {
-                            System.out.println("Dieser Held wurde bereits gewählt.");
-                        }
-
-                    } else {
-
-                        System.out.println("Bitte nur Zahlen eingeben.");
-                        scanner.next();
-                        heldNummer2 = 0;
-                    }
-                }
-
-                Held held2 = helden.get(heldNummer2 - 1);
-
                 System.out.println();
                 System.out.println("Zweiter Held:");
 
                 held2.anzeigen();
 
-                // Auf Enter warten
+                // Restlichen Zeilenumbruch nach nextInt entfernen
+                scanner.nextLine();
+
+                // Auf das Drücken von Enter warten
                 System.out.println();
                 System.out.println("Drücke Enter, um den Kampf zu starten...");
                 scanner.nextLine();
-                scanner.nextLine();
 
-
-                // Kampf starten
                 System.out.println();
                 System.out.println("=== Kampf beginnt ===");
+
                 System.out.println(held1.getName() + " kämpft gegen " + held2.getName());
 
+                // Einzelkampf starten
                 Kampf.starten(held1, held2, random);
 
-                System.out.println("Die Lebenspunkte wurden wieder aufgefüllt.");
+                System.out.println("Die Lebenspunkte und Angriffszähler " + "wurden zurückgesetzt.");
             }
 
-
-            // Turnier starten
+            // Menüpunkt 3: Turnier starten
             if (auswahl == 3) {
-
                 Turnier.starten(helden, random);
             }
 
-            // Programm beenden
+            // Menüpunkt 0: Programm beenden
             if (auswahl == 0) {
                 System.out.println();
                 System.out.println("Das Programm wurde beendet.");
             }
 
-            // Ungültiger Menüpunkt
+            // Ungültige Menüauswahl
             if (auswahl < 0 || auswahl > 3) {
                 System.out.println("Ungültige Auswahl. " + "Wähle 0, 1, 2 oder 3.");
             }
-            
+        }
 
-        } while (auswahl != 0);
+        // Scanner am Programmende schließen
         scanner.close();
+    }
+
+    // Einen Helden sicher auswählen
+    public static Held heldAuswaehlen(
+            Scanner scanner,
+            ArrayList<Held> helden,
+            Held ausgeschlossenerHeld,
+            String aufforderung) {
+
+        Held ausgewaehlterHeld = null;
+
+        // Schleife läuft, bis ein gültiger Held gewählt wurde
+        while (ausgewaehlterHeld == null) {
+
+            System.out.print(aufforderung);
+
+            // Prüfen, ob eine Zahl eingegeben wurde
+            if (scanner.hasNextInt()) {
+
+                int heldNummer = scanner.nextInt();
+                // Prüfen, ob die Nummer im erlaubten Bereich liegt
+                if (heldNummer < 1 || heldNummer > helden.size()) {
+
+                    System.out.println("Ungültige Nummer.");
+
+                    continue;
+                }
+
+                // Gewählten Helden aus der Liste holen
+                Held moeglicherHeld = helden.get(heldNummer - 1);
+
+                // Prüfen, ob dieser Held bereits gewählt wurde
+                if (moeglicherHeld == ausgeschlossenerHeld) {
+
+                    System.out.println("Dieser Held wurde bereits gewählt.");
+
+                    continue;
+                }
+
+                // Gültigen Helden speichern
+                ausgewaehlterHeld = moeglicherHeld;
+
+            } else {
+
+                System.out.println("Bitte nur Zahlen eingeben.");
+
+                // Ungültige Eingabe entfernen
+                scanner.next();
+            }
+        }
+
+        // Ausgewählten Helden zurückgeben
+        return ausgewaehlterHeld;
     }
 }

@@ -2,7 +2,7 @@ import java.util.Random;
 
 public class Held {
 
-    // Werte des Helden
+    // Eigenschaften des Helden
     private String name;
     private int hp;
     private int startHp;
@@ -12,7 +12,13 @@ public class Held {
     private int angriffsZaehler;
 
     // Konstruktor
-    public Held(String name, int hp, int angriff, int ruestung, String rolle) {
+    public Held(
+            String name,
+            int hp,
+            int angriff,
+            int ruestung,
+            String rolle) {
+
         this.name = name;
         this.hp = hp;
         this.startHp = hp;
@@ -22,28 +28,37 @@ public class Held {
         this.angriffsZaehler = 0;
     }
 
-    // Getter
+    // Name zurückgeben
     public String getName() {
         return name;
     }
 
-    public String getRolle() {
-        return rolle;
-    }
-
+    // Lebenspunkte zurückgeben
     public int getHp() {
         return hp;
     }
 
+    // Angriffswert zurückgeben
     public int getAngriff() {
         return angriff;
     }
 
+    // Rüstung zurückgeben
     public int getRuestung() {
         return ruestung;
     }
 
-    // Schaden bekommen
+    // Rolle zurückgeben
+    public String getRolle() {
+        return rolle;
+    }
+
+    // Angriffszähler für Unterklassen zurückgeben
+    protected int getAngriffsZaehler() {
+        return angriffsZaehler;
+    }
+
+    // Schaden von den Lebenspunkten abziehen
     public void nimmSchaden(int schaden) {
         hp = hp - schaden;
     }
@@ -53,7 +68,7 @@ public class Held {
         return hp <= 0;
     }
 
-    // Informationen des Helden anzeigen
+    // Informationen zum Helden anzeigen
     public void anzeigen() {
         System.out.println("Name: " + name + " | Rolle: " + rolle + " | Lebenspunkte: " + hp + " | Angriff: " + angriff + " | Rüstung: " + ruestung);
     }
@@ -61,40 +76,42 @@ public class Held {
     // Einen anderen Helden angreifen
     public void greiftAn(Held ziel, Random random) {
 
-        // Angriff zählen
+        // Angriffszähler zuerst erhöhen
         angriffsZaehler++;
 
-        // Basisschaden
+        // Basisschaden mit genau einem Zufallsaufruf
         int schaden = angriff + random.nextInt(5);
 
-        // Magier: Jeder 4. Angriff macht doppelten Schaden
-        if (rolle.equals("Magier") && angriffsZaehler % 4 == 0) {
-            schaden = schaden * 2;
-            System.out.println("Magier-Bonus! Doppelter Schaden.");
-        }
-
-        // Bogenschütze: Jeder 3. Angriff macht 8 Schaden mehr
+        // Bogenschütze bekommt bei jedem dritten Angriff 8 Schaden dazu
         if (rolle.equals("Bogenschütze") && angriffsZaehler % 3 == 0) {
             schaden = schaden + 8;
-            System.out.println("Bogenschütze-Bonus! Plus 8 Schaden.");
+            System.out.println("Bogenschützen-Bonus! Plus 8 Schaden.");
         }
 
-        // Rüstung des Gegners berücksichtigen
+        // Unterklassen können eine eigene Sonderregel anwenden
+        schaden = sonderregelAnwenden(schaden);
+
+        // Rüstung des Verteidigers vom Schaden abziehen
         int echterSchaden = schaden - ziel.getRuestung();
 
-        // Schaden darf nicht negativ sein
+        // Schaden darf nicht negativ werden
         if (echterSchaden < 0) {
             echterSchaden = 0;
         }
 
-        // Gegner bekommt Schaden
+        // Tatsächlichen Schaden von den HP abziehen
         ziel.nimmSchaden(echterSchaden);
 
-        // Angriff ausgeben
-        System.out.println(name + " hat " + ziel.getName() + " " + schaden + " Schaden zugefügt. " + ziel.getName() + " hat noch " + ziel.getHp() + " Lebenspunkte.");
+        // Tatsächlich abgezogenen Schaden ausgeben
+        System.out.println(name + " hat " + ziel.getName() + " " + echterSchaden + " Schaden zugefügt. " + ziel.getName() + " hat noch " + ziel.getHp() + " Lebenspunkte.");
     }
 
-    // Held zurücksetzen
+    // Normale Helden verändern den Schaden nicht
+    protected int sonderregelAnwenden(int schaden) {
+        return schaden;
+    }
+
+    // Lebenspunkte und Angriffszähler zurücksetzen
     public void zuruecksetzen() {
         hp = startHp;
         angriffsZaehler = 0;
