@@ -1,27 +1,21 @@
 public class Magier extends Held {
 
-    // Konstruktor des Magiers
-    public Magier(
-            String name,
-            int hp,
-            int angriff,
-            int ruestung) {
+    public Magier(String name, int hp, int angriff, int ruestung, Kampfverhalten verhalten) {
 
-        // Konstruktor der Oberklasse Held aufrufen
-        super(name, hp, angriff, ruestung, "Magier");
+        super(name, hp, angriff, ruestung, Rolle.MAGIER, verhalten);
     }
 
-    // Eigene Sonderregel des Magiers
     @Override
-    protected int sonderregelAnwenden(int schaden) {
+    protected int besonderheitAnwenden(int schaden) {
 
-        // Jeder vierte Angriff macht doppelten Schaden
+        // Jeder 4. Angriff macht doppelten Schaden
         if (getAngriffsZaehler() % 4 == 0) {
+
             System.out.println("Magier-Bonus! Doppelter Schaden.");
+
             return schaden * 2;
         }
 
-        // Bei allen anderen Angriffen bleibt der Schaden normal
         return schaden;
     }
 }

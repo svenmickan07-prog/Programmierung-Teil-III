@@ -2,22 +2,18 @@ import java.util.Random;
 
 public class Held {
 
-    // Eigenschaften des Helden
     private String name;
     private int hp;
     private int startHp;
     private int angriff;
     private int ruestung;
-    private String rolle;
+    private Rolle rolle;
     private int angriffsZaehler;
 
-    // Konstruktor
-    public Held(
-            String name,
-            int hp,
-            int angriff,
-            int ruestung,
-            String rolle) {
+    // Jeder Held hat ein Kampfverhalten
+    private Kampfverhalten verhalten;
+
+    public Held(String name, int hp, int angriff, int ruestung, Rolle rolle, Kampfverhalten verhalten) {
 
         this.name = name;
         this.hp = hp;
@@ -25,94 +21,92 @@ public class Held {
         this.angriff = angriff;
         this.ruestung = ruestung;
         this.rolle = rolle;
+        this.verhalten = verhalten;
         this.angriffsZaehler = 0;
     }
 
-    // Name zurückgeben
     public String getName() {
         return name;
     }
 
-    // Lebenspunkte zurückgeben
     public int getHp() {
         return hp;
     }
 
-    // Angriffswert zurückgeben
     public int getAngriff() {
         return angriff;
     }
 
-    // Rüstung zurückgeben
     public int getRuestung() {
         return ruestung;
     }
 
-    // Rolle zurückgeben
-    public String getRolle() {
+    public Rolle getRolle() {
         return rolle;
     }
 
-    // Angriffszähler für Unterklassen zurückgeben
     protected int getAngriffsZaehler() {
         return angriffsZaehler;
     }
 
-    // Schaden von den Lebenspunkten abziehen
+    // Verhalten kann später geändert werden
+    public void setVerhalten(Kampfverhalten verhalten) {
+        this.verhalten = verhalten;
+    }
+
     public void nimmSchaden(int schaden) {
         hp = hp - schaden;
     }
 
-    // Prüfen, ob der Held besiegt wurde
     public boolean istBesiegt() {
         return hp <= 0;
     }
 
-    // Informationen zum Helden anzeigen
     public void anzeigen() {
-        System.out.println("Name: " + name + " | Rolle: " + rolle + " | Lebenspunkte: " + hp + " | Angriff: " + angriff + " | Rüstung: " + ruestung);
+
+        System.out.println("Name: " + name + " | Rolle: " + rolle.getName() + " | Lebenspunkte: " + hp + " | Angriff: " + angriff + " | Rüstung: " + ruestung);
     }
 
-    // Einen anderen Helden angreifen
     public void greiftAn(Held ziel, Random random) {
 
-        // Angriffszähler zuerst erhöhen
+        // Angriff zählen
         angriffsZaehler++;
 
-        // Basisschaden mit genau einem Zufallsaufruf
-        int schaden = angriff + random.nextInt(5);
+        // Verhalten berechnet erstmal den normalen Schaden
+        int schaden = verhalten.berechneSchaden(this, random);
 
-        // Bogenschütze bekommt bei jedem dritten Angriff 8 Schaden dazu
-        if (rolle.equals("Bogenschütze") && angriffsZaehler % 3 == 0) {
-            schaden = schaden + 8;
-            System.out.println("Bogenschützen-Bonus! Plus 8 Schaden.");
-        }
+        // Besonderheit der Heldenart anwenden
+        schaden = besonderheitAnwenden(schaden);
 
-        // Unterklassen können eine eigene Sonderregel anwenden
-        schaden = sonderregelAnwenden(schaden);
-
-        // Rüstung des Verteidigers vom Schaden abziehen
+        // Rüstung abziehen
         int echterSchaden = schaden - ziel.getRuestung();
 
-        // Schaden darf nicht negativ werden
         if (echterSchaden < 0) {
             echterSchaden = 0;
         }
 
-        // Tatsächlichen Schaden von den HP abziehen
+        // Schaden vom Gegner abziehen
         ziel.nimmSchaden(echterSchaden);
 
-        // Tatsächlich abgezogenen Schaden ausgeben
         System.out.println(name + " hat " + ziel.getName() + " " + echterSchaden + " Schaden zugefügt. " + ziel.getName() + " hat noch " + ziel.getHp() + " Lebenspunkte.");
     }
 
-    // Normale Helden verändern den Schaden nicht
-    protected int sonderregelAnwenden(int schaden) {
+    // Normalerweise gibt es keine weitere Besonderheit
+    protected int besonderheitAnwenden(int schaden) {
+
+        // Bogenschütze bleibt erstmal hier
+        if (rolle == Rolle.BOGENSCHUETZE && angriffsZaehler % 3 == 0) {
+
+            System.out.println("Bogenschützen-Bonus! Plus 8 Schaden.");
+
+            return schaden + 8;
+        }
+
         return schaden;
     }
 
-    // Lebenspunkte und Angriffszähler zurücksetzen
     public void zuruecksetzen() {
+
         hp = startHp;
         angriffsZaehler = 0;
     }
