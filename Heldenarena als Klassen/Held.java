@@ -88,4 +88,37 @@ public abstract class Held {
         hp = startHp;
         angriffsZaehler = 0;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        // Prüfen, ob es genau dasselbe Objekt ist
+        if (this == obj) {
+            return true;
+        }
+
+
+        // Prüfen, ob das andere Objekt überhaupt ein Held ist
+        if (!(obj instanceof Held)) {
+            return false;
+        }
+
+        // Object zu Held machen
+        Held andererHeld = (Held) obj;
+
+        // Name und Rolle vergleichen
+        return name.equals(andererHeld.name)
+                && rolle == andererHeld.rolle;
+    }
+
+    @Override
+    public int hashCode() {
+
+        int ergebnis = name.hashCode();
+
+        ergebnis = 31 * ergebnis + rolle.hashCode();
+
+        return ergebnis;
+    }
+
 }

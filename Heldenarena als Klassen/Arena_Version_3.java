@@ -9,6 +9,17 @@ public class Arena_Version_3 {
         // Helden erstellen
         ArrayList<Held> helden = HeldenFactory.erzeugeStandardHelden();
 
+        // Test für equals
+        Held bjorn = helden.get(0);
+
+        Held bjorn1 = new Krieger ("Bjorn", 120, 10, 3);
+
+        System.out.println("=== equals Test ===");
+        System.out.println("Gleiches Objekt: " + bjorn.equals(bjorn));
+        System.out.println("Zwei gleiche Helden: " + bjorn.equals(bjorn1));
+        System.out.println("Held gegen Text: " + bjorn.equals("Hallo"));
+        System.out.println();
+
         Scanner scanner = new Scanner(System.in);
 
         // Ein Random für das gesamte Programm
