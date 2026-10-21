@@ -1,6 +1,6 @@
 import java.util.Random;
 
-public class Held {
+public abstract class Held {
 
     private String name;
     private int hp;
@@ -10,10 +10,7 @@ public class Held {
     private Rolle rolle;
     private int angriffsZaehler;
 
-    // Jeder Held hat ein Kampfverhalten
-    private Kampfverhalten verhalten;
-
-    public Held(String name, int hp, int angriff, int ruestung, Rolle rolle, Kampfverhalten verhalten) {
+    public Held(String name, int hp, int angriff, int ruestung, Rolle rolle) {
 
         this.name = name;
         this.hp = hp;
@@ -21,7 +18,6 @@ public class Held {
         this.angriff = angriff;
         this.ruestung = ruestung;
         this.rolle = rolle;
-        this.verhalten = verhalten;
         this.angriffsZaehler = 0;
     }
 
@@ -49,11 +45,6 @@ public class Held {
         return angriffsZaehler;
     }
 
-    // Verhalten kann später geändert werden
-    public void setVerhalten(Kampfverhalten verhalten) {
-        this.verhalten = verhalten;
-    }
-
     public void nimmSchaden(int schaden) {
         hp = hp - schaden;
     }
@@ -63,50 +54,37 @@ public class Held {
     }
 
     public void anzeigen() {
-
         System.out.println("Name: " + name + " | Rolle: " + rolle.getName() + " | Lebenspunkte: " + hp + " | Angriff: " + angriff + " | Rüstung: " + ruestung);
     }
 
     public void greiftAn(Held ziel, Random random) {
 
-        // Angriff zählen
+        // Angriff zuerst zählen
         angriffsZaehler++;
 
-        // Verhalten berechnet erstmal den normalen Schaden
-        int schaden = verhalten.berechneSchaden(this, random);
+        // Angriff plus ein Zufallswert von 0 bis 4
+        int schaden = angriff + random.nextInt(5);
 
         // Besonderheit der Heldenart anwenden
         schaden = besonderheitAnwenden(schaden);
 
-        // Rüstung abziehen
+        // Rüstung des Gegners abziehen
         int echterSchaden = schaden - ziel.getRuestung();
 
         if (echterSchaden < 0) {
             echterSchaden = 0;
         }
 
-        // Schaden vom Gegner abziehen
         ziel.nimmSchaden(echterSchaden);
 
+        // Ausgabe zeigt den Schaden nach der Rüstung
         System.out.println(name + " hat " + ziel.getName() + " " + echterSchaden + " Schaden zugefügt. " + ziel.getName() + " hat noch " + ziel.getHp() + " Lebenspunkte.");
     }
 
-    // Normalerweise gibt es keine weitere Besonderheit
-    protected int besonderheitAnwenden(int schaden) {
-
-        // Bogenschütze bleibt erstmal hier
-        if (rolle == Rolle.BOGENSCHUETZE && angriffsZaehler % 3 == 0) {
-
-            System.out.println("Bogenschützen-Bonus! Plus 8 Schaden.");
-
-            return schaden + 8;
-        }
-
-        return schaden;
-    }
+    // Jede Heldenart legt ihre eigene Besonderheit fest
+    protected abstract int besonderheitAnwenden(int schaden);
 
     public void zuruecksetzen() {
-
         hp = startHp;
         angriffsZaehler = 0;
     }

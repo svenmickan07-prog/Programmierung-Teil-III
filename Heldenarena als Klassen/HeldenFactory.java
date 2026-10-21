@@ -4,14 +4,19 @@ public class HeldenFactory {
 
     public static Held erstellen(Rolle rolle, String name, int hp, int angriff, int ruestung) {
 
-        Kampfverhalten verhalten = new StandardVerhalten();
-
-        if (rolle == Rolle.MAGIER) {
-
-            return new Magier(name, hp, angriff, ruestung, verhalten);
+        if (rolle == Rolle.KRIEGER) {
+            return new Krieger(name, hp, angriff, ruestung);
         }
 
-        return new Held(name, hp, angriff, ruestung, rolle, verhalten);
+        if (rolle == Rolle.MAGIER) {
+            return new Magier(name, hp, angriff, ruestung);
+        }
+
+        if (rolle == Rolle.BOGENSCHUETZE) {
+            return new Bogenschuetze(name, hp, angriff, ruestung);
+        }
+
+        throw new IllegalArgumentException("Unbekannte Rolle.");
     }
 
     public static ArrayList<Held> erzeugeStandardHelden() {

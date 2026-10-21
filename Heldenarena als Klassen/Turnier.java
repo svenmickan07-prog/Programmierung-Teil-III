@@ -6,21 +6,18 @@ public class Turnier {
     public static void starten(ArrayList<Held> helden, Random random) {
 
         if (helden.size() < 2) {
-
             System.out.println("Für ein Turnier werden mindestens zwei Helden benötigt.");
-
             return;
         }
 
         System.out.println();
         System.out.println("=== Turnier startet ===");
 
-        // Kopie der Heldenliste
+        // Mit einer Kopie der Heldenliste arbeiten
         ArrayList<Held> aktuelleRunde = new ArrayList<>(helden);
 
         int runde = 1;
 
-        // Spielen bis nur noch ein Held übrig ist
         while (aktuelleRunde.size() > 1) {
 
             System.out.println();
@@ -28,10 +25,9 @@ public class Turnier {
 
             ArrayList<Held> naechsteRunde = new ArrayList<>();
 
-            // Immer zwei Helden kämpfen gegeneinander
             for (int i = 0; i < aktuelleRunde.size(); i = i + 2) {
 
-                // Wenn kein Gegner mehr vorhanden ist, gibt es ein Freilos
+                // Letzter Held bekommt bei ungerader Anzahl ein Freilos
                 if (i + 1 >= aktuelleRunde.size()) {
 
                     Held freilos = aktuelleRunde.get(i);
@@ -39,7 +35,6 @@ public class Turnier {
                     System.out.println(freilos.getName() + " hat ein Freilos und kommt weiter.");
 
                     naechsteRunde.add(freilos);
-
                     continue;
                 }
 
@@ -51,12 +46,10 @@ public class Turnier {
 
                 Held sieger = Kampf.starten(held1, held2, random);
 
-                // Gewinner kommt eine Runde weiter
                 naechsteRunde.add(sieger);
             }
 
             aktuelleRunde = naechsteRunde;
-
             runde++;
         }
 
