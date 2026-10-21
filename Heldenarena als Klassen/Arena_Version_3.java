@@ -20,6 +20,7 @@ public class Arena_Version_3 {
         System.out.println("Held gegen Text: " + bjorn.equals("Hallo"));
         System.out.println();
 
+
         Scanner scanner = new Scanner(System.in);
 
         // Ein Random für das gesamte Programm

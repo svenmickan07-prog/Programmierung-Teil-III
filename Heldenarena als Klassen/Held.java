@@ -97,7 +97,6 @@ public abstract class Held {
             return true;
         }
 
-
         // Prüfen, ob das andere Objekt überhaupt ein Held ist
         if (!(obj instanceof Held)) {
             return false;
