@@ -119,5 +119,4 @@ public abstract class Held {
 
         return ergebnis;
     }
-
 }

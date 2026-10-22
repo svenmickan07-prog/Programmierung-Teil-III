@@ -72,23 +72,25 @@ public class Arena_Version_3 {
                 Held held1 = heldAuswaehlen(scanner, helden, null, "Wähle den ersten Helden: ");
                 Held held2 = heldAuswaehlen(scanner, helden, held1, "Wähle den zweiten Helden: ");
 
-                // Der Held mit der kleineren Nummer greift zuerst an
+                // Kleinere Nummer greift zuerst an
                 if (helden.indexOf(held1) > helden.indexOf(held2)) {
+
                     Held zwischenSpeicher = held1;
                     held1 = held2;
                     held2 = zwischenSpeicher;
                 }
 
-                System.out.println();
-                System.out.println("=== Kampf beginnt ===");
-                System.out.println(held1.getName() + " kämpft gegen " + held2.getName());
+                Einzelkampf kampf = new Einzelkampf(held1, held2, random);
 
-                Kampf.starten(held1, held2, random);
+                kampf.starten();
             }
 
             // Turnier starten
             if (auswahl == 3) {
-                Turnier.starten(helden, random);
+
+                Turnier turnier = new Turnier(helden, random);
+
+                turnier.starten();
             }
 
             // Programm beenden

@@ -1,19 +1,30 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Turnier {
+public class Turnier extends Kampf {
 
-    public static void starten(ArrayList<Held> helden, Random random) {
+    private ArrayList<Held> helden;
+
+    public Turnier(ArrayList<Held> helden, Random random) {
+
+        super(random);
+
+        this.helden = helden;
+    }
+
+    @Override
+    public String getName() {
+        return "Turnier";
+    }
+
+    @Override
+    protected void kampfAusfuehren() {
 
         if (helden.size() < 2) {
             System.out.println("Für ein Turnier werden mindestens zwei Helden benötigt.");
             return;
         }
 
-        System.out.println();
-        System.out.println("=== Turnier startet ===");
-
-        // Mit einer Kopie der Heldenliste arbeiten
         ArrayList<Held> aktuelleRunde = new ArrayList<>(helden);
 
         int runde = 1;
@@ -27,7 +38,6 @@ public class Turnier {
 
             for (int i = 0; i < aktuelleRunde.size(); i = i + 2) {
 
-                // Letzter Held bekommt bei ungerader Anzahl ein Freilos
                 if (i + 1 >= aktuelleRunde.size()) {
 
                     Held freilos = aktuelleRunde.get(i);
@@ -35,28 +45,28 @@ public class Turnier {
                     System.out.println(freilos.getName() + " hat ein Freilos und kommt weiter.");
 
                     naechsteRunde.add(freilos);
+
                     continue;
                 }
 
                 Held held1 = aktuelleRunde.get(i);
                 Held held2 = aktuelleRunde.get(i + 1);
 
-                System.out.println();
-                System.out.println(held1.getName() + " gegen " + held2.getName());
+                Einzelkampf kampf = new Einzelkampf(held1, held2, random);
 
-                Held sieger = Kampf.starten(held1, held2, random);
+                kampf.starten();
 
-                naechsteRunde.add(sieger);
+                naechsteRunde.add(kampf.getGewinner());
             }
 
             aktuelleRunde = naechsteRunde;
+
             runde++;
         }
 
         Held gesamtSieger = aktuelleRunde.get(0);
 
         System.out.println();
-        System.out.println("=== Turnier beendet ===");
         System.out.println("Gesamtsieger: " + gesamtSieger.getName());
     }
 }
