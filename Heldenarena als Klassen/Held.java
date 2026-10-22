@@ -2,19 +2,21 @@ import java.util.Random;
 
 public abstract class Held {
 
+    private static final int SCHADENS_SPIELRAUM = 5;
+
     private String name;
-    private int hp;
-    private int startHp;
+    private int lebensPunkte;
+    private int startLebensPunkte;
     private int angriff;
     private int ruestung;
     private Rolle rolle;
     private int angriffsZaehler;
 
-    public Held(String name, int hp, int angriff, int ruestung, Rolle rolle) {
+    public Held(String name, int lebensPunkte, int angriff, int ruestung, Rolle rolle) {
 
         this.name = name;
-        this.hp = hp;
-        this.startHp = hp;
+        this.lebensPunkte = lebensPunkte;
+        this.startLebensPunkte = lebensPunkte;
         this.angriff = angriff;
         this.ruestung = ruestung;
         this.rolle = rolle;
@@ -25,8 +27,8 @@ public abstract class Held {
         return name;
     }
 
-    public int getHp() {
-        return hp;
+    public int getLebensPunkte() {
+        return lebensPunkte;
     }
 
     public int getAngriff() {
@@ -45,76 +47,75 @@ public abstract class Held {
         return angriffsZaehler;
     }
 
-    public void nimmSchaden(int schaden) {
-        hp = hp - schaden;
+    public boolean istBesiegt() {
+        return lebensPunkte <= 0;
     }
 
-    public boolean istBesiegt() {
-        return hp <= 0;
+    public void nimmSchaden(int schaden) {
+        lebensPunkte = lebensPunkte - schaden;
     }
 
     public void anzeigen() {
-        System.out.println("Name: " + name + " | Rolle: " + rolle.getName() + " | Lebenspunkte: " + hp + " | Angriff: " + angriff + " | Rüstung: " + ruestung);
+        System.out.println("Name: " + name + " | Rolle: " + rolle.getName()
+                + " | Lebenspunkte: " + lebensPunkte + " | Angriff: "
+                + angriff + " | Rüstung: " + ruestung);
     }
 
-    public void greiftAn(Held ziel, Random random) {
+    public void greiftAn(Held ziel, Random zufall) {
 
-        // Angriff zuerst zählen
         angriffsZaehler++;
 
-        // Angriff plus ein Zufallswert von 0 bis 4
-        int schaden = angriff + random.nextInt(5);
+        // Pro Angriff wird genau ein Zufallswert erzeugt
+        int schaden = angriff + zufall.nextInt(SCHADENS_SPIELRAUM);
 
-        // Besonderheit der Heldenart anwenden
+        // Die konkrete Heldenart kümmert sich um ihren eigenen Bonus
         schaden = besonderheitAnwenden(schaden);
 
-        // Rüstung des Gegners abziehen
+        // Die Rüstung wirkt erst nach der Besonderheit
         int echterSchaden = schaden - ziel.getRuestung();
 
+        // Schaden darf einem Helden keine Lebenspunkte geben
         if (echterSchaden < 0) {
             echterSchaden = 0;
         }
 
         ziel.nimmSchaden(echterSchaden);
 
-        // Ausgabe zeigt den Schaden nach der Rüstung
-        System.out.println(name + " hat " + ziel.getName() + " " + echterSchaden + " Schaden zugefügt. " + ziel.getName() + " hat noch " + ziel.getHp() + " Lebenspunkte.");
+        System.out.println(name + " hat " + ziel.getName() + " "
+                + echterSchaden + " Schaden zugefügt. " + ziel.getName()
+                + " hat noch " + ziel.getLebensPunkte() + " Lebenspunkte.");
     }
 
-    // Jede Heldenart legt ihre eigene Besonderheit fest
     protected abstract int besonderheitAnwenden(int schaden);
 
     public void zuruecksetzen() {
-        hp = startHp;
+        lebensPunkte = startLebensPunkte;
         angriffsZaehler = 0;
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(Object objekt) {
 
-        // Prüfen, ob es genau dasselbe Objekt ist
-        if (this == obj) {
+        // Dasselbe Objekt ist immer gleich
+        if (this == objekt) {
             return true;
         }
 
-        // Prüfen, ob das andere Objekt überhaupt ein Held ist
-        if (!(obj instanceof Held)) {
+        // Nur Helden werden miteinander verglichen
+        if (!(objekt instanceof Held)) {
             return false;
         }
 
-        // Object zu Held machen
-        Held andererHeld = (Held) obj;
+        Held andererHeld = (Held) objekt;
 
-        // Name und Rolle vergleichen
-        return name.equals(andererHeld.name)
-                && rolle == andererHeld.rolle;
+        return name.equals(andererHeld.name) && rolle == andererHeld.rolle;
     }
 
     @Override
     public int hashCode() {
 
+        // equals und hashCode benutzen dieselben Werte
         int ergebnis = name.hashCode();
-
         ergebnis = 31 * ergebnis + rolle.hashCode();
 
         return ergebnis;

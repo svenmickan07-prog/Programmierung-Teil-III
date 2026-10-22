@@ -2,18 +2,20 @@ import java.util.ArrayList;
 
 public class HeldenFactory {
 
-    public static Held erstellen(Rolle rolle, String name, int hp, int angriff, int ruestung) {
+    public static Held erstellen(Rolle rolle, String name, int lebensPunkte,
+                                 int angriff, int ruestung) {
 
+        // Die Factory entscheidet, welche konkrete Heldenklasse erstellt wird
         if (rolle == Rolle.KRIEGER) {
-            return new Krieger(name, hp, angriff, ruestung);
+            return new Krieger(name, lebensPunkte, angriff, ruestung);
         }
 
         if (rolle == Rolle.MAGIER) {
-            return new Magier(name, hp, angriff, ruestung);
+            return new Magier(name, lebensPunkte, angriff, ruestung);
         }
 
         if (rolle == Rolle.BOGENSCHUETZE) {
-            return new Bogenschuetze(name, hp, angriff, ruestung);
+            return new Bogenschuetze(name, lebensPunkte, angriff, ruestung);
         }
 
         throw new IllegalArgumentException("Unbekannte Rolle.");

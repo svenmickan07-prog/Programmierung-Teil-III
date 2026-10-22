@@ -1,13 +1,13 @@
 public class Krieger extends Held {
 
-    public Krieger(String name, int hp, int angriff, int ruestung) {
-        super(name, hp, angriff, ruestung, Rolle.KRIEGER);
+    public Krieger(String name, int lebensPunkte, int angriff, int ruestung) {
+        super(name, lebensPunkte, angriff, ruestung, Rolle.KRIEGER);
     }
 
     @Override
     protected int besonderheitAnwenden(int schaden) {
 
-        // Die Besonderheit des Kriegers ist seine höhere Rüstung
+        // Die höhere Rüstung ist die Besonderheit des Kriegers
         return schaden;
     }
 }

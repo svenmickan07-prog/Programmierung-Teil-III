@@ -2,24 +2,22 @@ import java.util.Random;
 
 public abstract class Kampf {
 
-    protected Random random;
+    protected Random zufall;
 
-    public Kampf(Random random) {
-        this.random = random;
+    public Kampf(Random zufall) {
+        this.zufall = zufall;
     }
 
-    // Der gemeinsame Start für jede Kampfart
     public void starten() {
 
         System.out.println();
         System.out.println("=== " + getName() + " ===");
 
-        kampfAusfuehren();
+        ausfuehren();
     }
 
-    // Jede Kampfart muss einen eigenen Namen haben
-    public abstract String getName();
+    // Die konkrete Kampfart füllt diese beiden Lücken selbst
+    protected abstract String getName();
 
-    // Jede Kampfart muss festlegen, wie sie abläuft
-    protected abstract void kampfAusfuehren();
+    protected abstract void ausfuehren();
 }

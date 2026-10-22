@@ -4,41 +4,22 @@ import java.util.Scanner;
 
 public class Arena_Version_3 {
 
+    private static final int ZUFALLS_SEED = 42;
+
     public static void main(String[] args) {
 
-        // Helden erstellen
         ArrayList<Held> helden = HeldenFactory.erzeugeStandardHelden();
-
-        // Test für equals
-        Held bjorn = helden.get(0);
-
-        Held bjorn1 = new Krieger ("Bjorn", 120, 10, 3);
-
-        System.out.println("=== equals Test ===");
-        System.out.println("Gleiches Objekt: " + bjorn.equals(bjorn));
-        System.out.println("Zwei gleiche Helden: " + bjorn.equals(bjorn1));
-        System.out.println("Held gegen Text: " + bjorn.equals("Hallo"));
-        System.out.println();
-
-
         Scanner scanner = new Scanner(System.in);
 
-        // Ein Random für das gesamte Programm
-        Random random = new Random(42);
+        // Der feste Seed sorgt bei jedem Start für dieselbe Zufallsfolge
+        Random zufall = new Random(ZUFALLS_SEED);
 
         int auswahl = -1;
 
         while (auswahl != 0) {
 
-            System.out.println();
-            System.out.println("=== Arena Version 3 ===");
-            System.out.println("1 - Helden anzeigen");
-            System.out.println("2 - Kampf starten");
-            System.out.println("3 - Turnier starten");
-            System.out.println("0 - Programm beenden");
-            System.out.print("Wähle einen Menüpunkt: ");
+            menueAnzeigen();
 
-            // Menüeingabe prüfen
             if (scanner.hasNextInt()) {
                 auswahl = scanner.nextInt();
             } else {
@@ -47,59 +28,23 @@ public class Arena_Version_3 {
                 auswahl = -1;
             }
 
-            // Helden anzeigen
             if (auswahl == 1) {
-
-                System.out.println();
-                System.out.println("=== Verfügbare Helden ===");
-
-                for (int i = 0; i < helden.size(); i++) {
-                    System.out.print((i + 1) + " - ");
-                    helden.get(i).anzeigen();
-                }
+                heldenAnzeigen(helden);
             }
 
-            // Einzelkampf starten
             if (auswahl == 2) {
-
-                System.out.println();
-                System.out.println("=== Verfügbare Helden ===");
-
-                for (int i = 0; i < helden.size(); i++) {
-                    System.out.println((i + 1) + " - " + helden.get(i).getName());
-                }
-
-                Held held1 = heldAuswaehlen(scanner, helden, null, "Wähle den ersten Helden: ");
-                Held held2 = heldAuswaehlen(scanner, helden, held1, "Wähle den zweiten Helden: ");
-
-                // Kleinere Nummer greift zuerst an
-                if (helden.indexOf(held1) > helden.indexOf(held2)) {
-
-                    Held zwischenSpeicher = held1;
-                    held1 = held2;
-                    held2 = zwischenSpeicher;
-                }
-
-                Einzelkampf kampf = new Einzelkampf(held1, held2, random);
-
-                kampf.starten();
+                einzelkampfStarten(scanner, helden, zufall);
             }
 
-            // Turnier starten
             if (auswahl == 3) {
-
-                Turnier turnier = new Turnier(helden, random);
-
+                Turnier turnier = new Turnier(helden, zufall);
                 turnier.starten();
             }
 
-            // Programm beenden
             if (auswahl == 0) {
-                System.out.println();
                 System.out.println("Das Programm wurde beendet.");
             }
 
-            // Ungültiger Menüpunkt
             if (auswahl < 0 || auswahl > 3) {
                 System.out.println("Ungültige Auswahl. Wähle 0, 1, 2 oder 3.");
             }
@@ -108,8 +53,48 @@ public class Arena_Version_3 {
         scanner.close();
     }
 
-    // Methode wird für beide Helden verwendet
-    public static Held heldAuswaehlen(Scanner scanner, ArrayList<Held> helden, Held ausgeschlossenerHeld, String text) {
+    private static void menueAnzeigen() {
+
+        System.out.println();
+        System.out.println("=== Arena Version 3 ===");
+        System.out.println("1 - Helden anzeigen");
+        System.out.println("2 - Kampf starten");
+        System.out.println("3 - Turnier starten");
+        System.out.println("0 - Programm beenden");
+        System.out.print("Wähle einen Menüpunkt: ");
+    }
+
+    private static void heldenAnzeigen(ArrayList<Held> helden) {
+
+        System.out.println();
+        System.out.println("=== Verfügbare Helden ===");
+
+        for (int i = 0; i < helden.size(); i++) {
+            System.out.print((i + 1) + " - ");
+            helden.get(i).anzeigen();
+        }
+    }
+
+    private static void einzelkampfStarten(Scanner scanner, ArrayList<Held> helden, Random zufall) {
+
+        heldenAnzeigen(helden);
+
+        Held ersterHeld = heldAuswaehlen(scanner, helden, null, "Wähle den ersten Helden: ");
+        Held zweiterHeld = heldAuswaehlen(scanner, helden, ersterHeld, "Wähle den zweiten Helden: ");
+
+        // Der Held mit der kleineren Nummer beginnt
+        if (helden.indexOf(ersterHeld) > helden.indexOf(zweiterHeld)) {
+            Held zwischenSpeicher = ersterHeld;
+            ersterHeld = zweiterHeld;
+            zweiterHeld = zwischenSpeicher;
+        }
+
+        Einzelkampf kampf = new Einzelkampf(ersterHeld, zweiterHeld, zufall);
+        kampf.starten();
+    }
+
+    private static Held heldAuswaehlen(Scanner scanner, ArrayList<Held> helden,
+                                       Held ausgeschlossenerHeld, String text) {
 
         Held ausgewaehlterHeld = null;
 
@@ -123,15 +108,16 @@ public class Arena_Version_3 {
                 continue;
             }
 
-            int nummer = scanner.nextInt();
+            int heldNummer = scanner.nextInt();
 
-            if (nummer < 1 || nummer > helden.size()) {
+            if (heldNummer < 1 || heldNummer > helden.size()) {
                 System.out.println("Ungültige Nummer.");
                 continue;
             }
 
-            Held held = helden.get(nummer - 1);
+            Held held = helden.get(heldNummer - 1);
 
+            // Derselbe Held darf nicht gegen sich selbst kämpfen
             if (held == ausgeschlossenerHeld) {
                 System.out.println("Dieser Held wurde bereits gewählt.");
                 continue;

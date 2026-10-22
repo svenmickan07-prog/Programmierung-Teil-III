@@ -2,54 +2,64 @@ import java.util.Random;
 
 public class Einzelkampf extends Kampf {
 
-    private Held held1;
-    private Held held2;
+    private Held ersterHeld;
+    private Held zweiterHeld;
     private Held gewinner;
 
-    public Einzelkampf(Held held1, Held held2, Random random) {
+    public Einzelkampf(Held ersterHeld, Held zweiterHeld, Random zufall) {
 
-        super(random);
+        super(zufall);
 
-        this.held1 = held1;
-        this.held2 = held2;
+        this.ersterHeld = ersterHeld;
+        this.zweiterHeld = zweiterHeld;
     }
 
     @Override
-    public String getName() {
+    protected String getName() {
         return "Kampf";
     }
 
     @Override
-    protected void kampfAusfuehren() {
+    protected void ausfuehren() {
 
-        held1.zuruecksetzen();
-        held2.zuruecksetzen();
+        kampfVorbereiten();
 
-        Held angreifer = held1;
-        Held verteidiger = held2;
-
-        System.out.println(held1.getName() + " kämpft gegen " + held2.getName());
+        Held angreifer = ersterHeld;
+        Held verteidiger = zweiterHeld;
 
         while (!verteidiger.istBesiegt()) {
 
-            angreifer.greiftAn(verteidiger, random);
+            angreifer.greiftAn(verteidiger, zufall);
 
-            if (verteidiger.istBesiegt()) {
-                break;
+            // Nach jedem Angriff wechseln die beiden ihre Rollen
+            if (!verteidiger.istBesiegt()) {
+                Held alterAngreifer = angreifer;
+                angreifer = verteidiger;
+                verteidiger = alterAngreifer;
             }
-
-            // Angreifer und Verteidiger tauschen
-            Held zwischenSpeicher = angreifer;
-            angreifer = verteidiger;
-            verteidiger = zwischenSpeicher;
         }
 
-        gewinner = angreifer;
+        kampfBeenden(angreifer);
+    }
+
+    private void kampfVorbereiten() {
+
+        // Jeder Kampf beginnt wieder mit den Startwerten
+        ersterHeld.zuruecksetzen();
+        zweiterHeld.zuruecksetzen();
+
+        System.out.println(ersterHeld.getName() + " kämpft gegen " + zweiterHeld.getName());
+    }
+
+    private void kampfBeenden(Held sieger) {
+
+        gewinner = sieger;
 
         System.out.println("Gewinner: " + gewinner.getName());
 
-        held1.zuruecksetzen();
-        held2.zuruecksetzen();
+        // Die Helden sind danach direkt für den nächsten Kampf bereit
+        ersterHeld.zuruecksetzen();
+        zweiterHeld.zuruecksetzen();
     }
 
     public Held getGewinner() {
